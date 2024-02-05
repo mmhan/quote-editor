@@ -25,6 +25,13 @@ interaction:
     command: /bin/bash
     compose_run_options: [ no-deps ]
 
+  # Run dev server
+  dev:
+    description: Run dev server
+    service: rails
+    command: bin/dev
+    compose_run_options: [ service-ports, use-aliases ]
+
   # A shortcut to run Bundler commands
   bundle:
     description: Run Bundler commands
