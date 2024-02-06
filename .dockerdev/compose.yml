@@ -50,6 +50,8 @@ services:
   rails:
     <<: *backend
     command: bundle exec rails
+    links:
+      - chrome-server
 
   web:
     <<: *backend
@@ -83,6 +85,12 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+  chrome-server:
+    image: selenium/standalone-chrome:120.0
+    environment:
+      - SE_START_VNC=false # VNC keeps exiting with SIGTRAP, so no remote inspection can be achieved for now
+    ports:
+      - "7900:7900"
 
 volumes:
   bundle:

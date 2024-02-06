@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+# References
+
+* HotRails tutorial
+* RubyOnWhales template to dockerize
+* [Running rails system tests with docker](https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/)

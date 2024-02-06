@@ -55,27 +55,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
       $(grep -Ev '^\s*#' /tmp/Aptfile | xargs)
 
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y gnupg wget curl unzip --no-install-recommends; \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | \
-    gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/google.gpg --import; \
-    chmod 644 /etc/apt/trusted.gpg.d/google.gpg; \
-    echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list; \
-    apt-get update -y; \
-    apt-get install -y google-chrome-stable;
-
-ENV CHROMEDRIVER_VERSION 114.0.5735.90
-ENV CHROMEDRIVER_DIR /chromedriver
-RUN mkdir $CHROMEDRIVER_DIR
-
-# Download and install Chromedriver
-RUN wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-RUN unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
-
-# Put Chromedriver into the PATH
-ENV PATH $CHROMEDRIVER_DIR:$PATH
-
 # Configure bundler
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
